@@ -59,6 +59,8 @@ export const fetchAlerts = async (
     }
   `)
   const gitHubAlerts = repository.vulnerabilityAlerts?.edges
+  console.log('gitHubAlerts', gitHubAlerts);
+  console.log('JSON gitHubAlerts', JSON.stringify(gitHubAlerts));
   if (gitHubAlerts) {
     const alerts: Alert[] = []
     for (const gitHubAlert of gitHubAlerts) {
