@@ -490,6 +490,8 @@ const fetchAlerts = (gitHubPersonalAccessToken, repositoryName, repositoryOwner,
     }
   `);
     const gitHubAlerts = (_a = repository.vulnerabilityAlerts) === null || _a === void 0 ? void 0 : _a.edges;
+    console.log('gitHubAlerts', gitHubAlerts);
+    console.log('JSON gitHubAlerts', JSON.stringify(gitHubAlerts));
     if (gitHubAlerts) {
         const alerts = [];
         for (const gitHubAlert of gitHubAlerts) {
