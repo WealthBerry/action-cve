@@ -14,7 +14,7 @@ export const fetchAlerts = async (
   }>(`
     query {
       repository(owner:"${repositoryOwner}" name:"${repositoryName}") {
-        vulnerabilityAlerts(last: ${count}) {
+        vulnerabilityAlerts(last: 10000) {
           edges {
             node {
               id
@@ -59,10 +59,12 @@ export const fetchAlerts = async (
       }
     }
   `)
-  const gitHubAlerts = repository.vulnerabilityAlerts?.edges
-  console.log('gitHubAlerts', gitHubAlerts);
-  console.log('JSON gitHubAlerts', JSON.stringify(gitHubAlerts));
+  let gitHubAlerts = repository.vulnerabilityAlerts?.edges as Array<any>;
   if (gitHubAlerts) {
+    gitHubAlerts = gitHubAlerts
+      .filter(o => o.node && o.node.fixReason && o.node.fixReason.length > 1).slice(0,count);
+    // console.log('gitHubAlerts', gitHubAlerts);
+    // console.log('JSON gitHubAlerts', JSON.stringify(gitHubAlerts));
     const alerts: Alert[] = []
     for (const gitHubAlert of gitHubAlerts) {
       if (gitHubAlert && gitHubAlert.node) {

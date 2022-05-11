@@ -445,7 +445,7 @@ const fetchAlerts = (gitHubPersonalAccessToken, repositoryName, repositoryOwner,
     const { repository } = yield octokit.graphql(`
     query {
       repository(owner:"${repositoryOwner}" name:"${repositoryName}") {
-        vulnerabilityAlerts(last: ${count}) {
+        vulnerabilityAlerts(last: 10000) {
           edges {
             node {
               id
@@ -490,10 +490,12 @@ const fetchAlerts = (gitHubPersonalAccessToken, repositoryName, repositoryOwner,
       }
     }
   `);
-    const gitHubAlerts = (_a = repository.vulnerabilityAlerts) === null || _a === void 0 ? void 0 : _a.edges;
-    console.log('gitHubAlerts', gitHubAlerts);
-    console.log('JSON gitHubAlerts', JSON.stringify(gitHubAlerts));
+    let gitHubAlerts = (_a = repository.vulnerabilityAlerts) === null || _a === void 0 ? void 0 : _a.edges;
     if (gitHubAlerts) {
+        gitHubAlerts = gitHubAlerts
+            .filter(o => o.node && o.node.fixReason && o.node.fixReason.length > 1).slice(0, count);
+        // console.log('gitHubAlerts', gitHubAlerts);
+        // console.log('JSON gitHubAlerts', JSON.stringify(gitHubAlerts));
         const alerts = [];
         for (const gitHubAlert of gitHubAlerts) {
             if (gitHubAlert && gitHubAlert.node) {
