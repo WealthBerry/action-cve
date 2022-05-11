@@ -449,8 +449,7 @@ const fetchAlerts = (gitHubPersonalAccessToken, repositoryName, repositoryOwner,
           edges {
             node {
               id
-              dismissReason
-              dismissedAt
+              fixReason            
               repository {
                 name
                 owner {

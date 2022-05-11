@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="8d691aec-0af9-4b39-b1e8-30ca38a31335" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fetch-alerts.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/fetch-alerts.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -23,6 +24,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/lib/fetch-alerts.js" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -44,16 +46,11 @@
       <option name="presentableId" value="Default" />
       <updated>1652253841835</updated>
       <workItem from="1652253842885" duration="4392000" />
+      <workItem from="1652263435863" duration="3058000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="649" y="256" width="700" height="522" key="find.popup" timestamp="1652254368905">
-      <screen x="0" y="27" width="1920" height="985" />
-    </state>
-    <state x="649" y="256" width="700" height="522" key="find.popup/0.27.1920.985@0.27.1920.985" timestamp="1652254368905" />
   </component>
 </project>

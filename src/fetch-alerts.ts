@@ -18,8 +18,7 @@ export const fetchAlerts = async (
           edges {
             node {
               id
-              dismissReason
-              dismissedAt
+              fixReason            
               repository {
                 name
                 owner {
