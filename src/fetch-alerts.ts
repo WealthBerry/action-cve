@@ -14,9 +14,9 @@ export const fetchAlerts = async (
   }>(`
     query {
       repository(owner:"${repositoryOwner}" name:"${repositoryName}") {
-        vulnerabilityAlerts(last: 100) {
+        vulnerabilityAlerts() {
           edges {
-            node(fixReason:null dismissReason:null) {
+            node {
               id
               fixReason            
               dismissReason

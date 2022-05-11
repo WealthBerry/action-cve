@@ -445,9 +445,9 @@ const fetchAlerts = (gitHubPersonalAccessToken, repositoryName, repositoryOwner,
     const { repository } = yield octokit.graphql(`
     query {
       repository(owner:"${repositoryOwner}" name:"${repositoryName}") {
-        vulnerabilityAlerts(last: 100) {
+        vulnerabilityAlerts() {
           edges {
-            node(fixReason:null dismissReason:null) {
+            node {
               id
               fixReason            
               dismissReason
