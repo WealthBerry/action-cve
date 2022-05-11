@@ -19,7 +19,14 @@ export const fetchAlerts = async (
             node {
               id
               repository {
-                vulnerabilityAlerts
+                vulnerabilityAlerts {
+                  nodes {
+                    createdAt
+                    dismissReason
+                    dismissedAt
+                    dismisser
+                  }
+                }
                 name
                 owner {
                   login
