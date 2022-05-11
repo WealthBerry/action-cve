@@ -450,7 +450,14 @@ const fetchAlerts = (gitHubPersonalAccessToken, repositoryName, repositoryOwner,
             node {
               id
               repository {
-                vulnerabilityAlerts
+                vulnerabilityAlerts {
+                  nodes {
+                    createdAt
+                    dismissReason
+                    dismissedAt
+                    dismisser
+                  }
+                }
                 name
                 owner {
                   login
