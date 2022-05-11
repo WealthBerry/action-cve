@@ -18,15 +18,8 @@ export const fetchAlerts = async (
           edges {
             node {
               id
+              closed
               repository {
-                vulnerabilityAlerts {
-                  nodes {
-                    createdAt
-                    dismissReason
-                    dismissedAt
-                    dismisser
-                  }
-                }
                 name
                 owner {
                   login
