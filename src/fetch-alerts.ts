@@ -1,6 +1,43 @@
 import { Alert, toAlert } from './entities'
 import { Repository } from '@octokit/graphql-schema'
 import { getOctokit } from '@actions/github'
+import JiraApi from 'jira-client'
+
+const jira = new JiraApi({
+  protocol: 'https',
+  host: 'wealthberry.atlassian.net',
+  username: process.env.SIEMBOT_JIRA_USER,
+  password: process.env.SIEMBOT_JIRA_PASS,
+  apiVersion: '2',
+  strictSSL: true,
+});
+
+function registerIssue(summary: string, description: string) {
+  jira.searchJira('project = "WBP" AND statusCategory in ("To Do", "In Progress") AND summary ~ "' + summary + '" ORDER BY updated DESC')
+    .then((data) => {
+      if (data.issues && data.issues.length > 0) {
+        console.log('Already exists');
+      } else {
+        jira.addNewIssue({
+          fields: {
+            summary: summary,
+            issuetype: {
+              id: "10001"
+            },
+            labels: [
+              "siem"
+            ],
+            project: {
+              "id": "10000"
+            },
+            "description": description,
+          }
+        }).then((data) => {
+          console.log(data);
+        });
+      }
+    });
+}
 
 export const fetchAlerts = async (
   gitHubPersonalAccessToken: string,
@@ -68,7 +105,11 @@ export const fetchAlerts = async (
     console.log('JSON gitHubAlerts', JSON.stringify(gitHubAlerts));
     const alerts: Alert[] = []
     for (const gitHubAlert of gitHubAlerts) {
-      if (gitHubAlert && gitHubAlert.node) {
+      if (gitHubAlert && gitHubAlert.node && gitHubAlert.node.securityAdvisory) {
+        registerIssue(
+          "siem-bot-github-issue-" + gitHubAlert.node.securityAdvisory.id,
+          gitHubAlert.node.securityAdvisory.description + '\n\n' + JSON.stringify(gitHubAlert)
+      );
         alerts.push(toAlert(gitHubAlert.node))
       }
     }

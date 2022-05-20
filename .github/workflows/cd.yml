@@ -33,3 +33,5 @@ jobs:
         run: npm run release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SIEMBOT_JIRA_USER: ${{ secrets.SIEMBOT_JIRA_USER }}
+          SIEMBOT_JIRA_USER: ${{ secrets.SIEMBOT_JIRA_USER }}
