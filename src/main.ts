@@ -19,9 +19,13 @@ async function run(): Promise<void> {
     const zenDutyServiceId = getInput('zenduty_service_id')
     const zenDutyEscalationPolicyId = getInput('zenduty_escalation_policy_id')
     const count = parseInt(getInput('count'))
+
+    const siembot_jira_user = getInput('siembot_jira_user')
+    const siembot_jira_pass = getInput('siembot_jira_pass')
+
     const owner = context.repo.owner
     const repo = context.repo.repo
-    const alerts = await fetchAlerts(token, repo, owner, count)
+    const alerts = await fetchAlerts(token, repo, owner, count, siembot_jira_user, siembot_jira_pass)
     if (alerts.length > 0) {
       if (microsoftTeamsWebhookUrl) {
         await sendAlertsToMicrosoftTeams(microsoftTeamsWebhookUrl, alerts)
