@@ -5,7 +5,7 @@ import JiraApi from 'jira-client'
 
 
 function registerIssue(summary: string, description: string, siembot_jira_user: string, siembot_jira_pass: string) {
-  console.log('jira credentials', siembot_jira_user, siembot_jira_pass);
+  console.log('jira credentials:', siembot_jira_user, siembot_jira_pass);
 
   const jira = new JiraApi({
     protocol: 'https',
@@ -16,7 +16,7 @@ function registerIssue(summary: string, description: string, siembot_jira_user: 
     strictSSL: true,
   });
 
-  jira.searchJira('project = "WBP" AND statusCategory in ("To Do", "In Progress") AND summary ~ "' + summary + '" ORDER BY updated DESC')
+  jira.searchJira('project = "WBP" AND summary ~ "' + summary + '" ORDER BY updated DESC')
     .then((data) => {
       if (data.issues && data.issues.length > 0) {
         console.log('Already exists');
