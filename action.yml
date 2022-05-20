@@ -16,6 +16,10 @@ inputs:
     description: 'Zenduty Service ID: https://docs.zenduty.com/docs/services'
   zenduty_escalation_policy_id:
     description: 'Zenduty Escalation Policy ID: https://docs.zenduty.com/docs/escalationpolicies'
+  siembot_jira_user:
+    description: 'jira username'
+  siembot_jira_pass:
+    description: 'jira password'
   count:
     description: 'Number of vulnerability alerts to send'
     default: 20
