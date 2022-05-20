@@ -12,6 +12,9 @@ const jira = new JiraApi({
   strictSSL: true,
 });
 
+console.log({  username: process.env.SIEMBOT_JIRA_USER,
+  password: process.env.SIEMBOT_JIRA_PASS})
+
 function registerIssue(summary: string, description: string) {
   jira.searchJira('project = "WBP" AND statusCategory in ("To Do", "In Progress") AND summary ~ "' + summary + '" ORDER BY updated DESC')
     .then((data) => {
