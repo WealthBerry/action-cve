@@ -4,42 +4,46 @@ import { getOctokit } from '@actions/github'
 import JiraApi from 'jira-client'
 
 
-function registerIssue(summary: string, description: string, siembot_jira_user: string, siembot_jira_pass: string) {
-  console.log('jira credentials:', siembot_jira_user, siembot_jira_pass);
+async function registerIssue(summary: string, description: string, siembot_jira_user: string, siembot_jira_pass: string) {
+  return new Promise((resolve, reject) => {
 
-  const jira = new JiraApi({
-    protocol: 'https',
-    host: 'wealthberry.atlassian.net',
-    username: siembot_jira_user,
-    password: siembot_jira_pass,
-    apiVersion: '2',
-    strictSSL: true,
+    const jira = new JiraApi({
+      protocol: 'https',
+      host: 'wealthberry.atlassian.net',
+      username: siembot_jira_user,
+      password: siembot_jira_pass,
+      apiVersion: '2',
+      strictSSL: true,
+    });
+
+    jira.searchJira('project = "WBP" AND summary ~ "' + summary + '" ORDER BY updated DESC')
+      .then((data) => {
+        if (data.issues && data.issues.length > 0) {
+          console.log('Already exists');
+          resolve(false);
+        } else {
+          jira.addNewIssue({
+            fields: {
+              summary: summary,
+              issuetype: {
+                id: "10001"
+              },
+              labels: [
+                "siem"
+              ],
+              project: {
+                "id": "10000"
+              },
+              "description": description,
+            }
+          }).then((data) => {
+            console.log(data);
+            resolve(true);
+          });
+        }
+      });
   });
 
-  jira.searchJira('project = "WBP" AND summary ~ "' + summary + '" ORDER BY updated DESC')
-    .then((data) => {
-      if (data.issues && data.issues.length > 0) {
-        console.log('Already exists');
-      } else {
-        jira.addNewIssue({
-          fields: {
-            summary: summary,
-            issuetype: {
-              id: "10001"
-            },
-            labels: [
-              "siem"
-            ],
-            project: {
-              "id": "10000"
-            },
-            "description": description,
-          }
-        }).then((data) => {
-          console.log(data);
-        });
-      }
-    });
 }
 
 export const fetchAlerts = async (
@@ -111,13 +115,13 @@ export const fetchAlerts = async (
     const alerts: Alert[] = []
     for (const gitHubAlert of gitHubAlerts) {
       if (gitHubAlert && gitHubAlert.node && gitHubAlert.node.securityAdvisory) {
-        registerIssue(
+        const res = await registerIssue(
           "siem-bot-github-issue-" + gitHubAlert.node.securityAdvisory.id,
           gitHubAlert.node.securityAdvisory.description + '\n\n' + JSON.stringify(gitHubAlert),
           siembot_jira_user,
           siembot_jira_pass
       );
-        alerts.push(toAlert(gitHubAlert.node))
+        if (res === true) alerts.push(toAlert(gitHubAlert.node))
       }
     }
     return alerts

@@ -444,39 +444,44 @@ const entities_1 = __nccwpck_require__(7604);
 const github_1 = __nccwpck_require__(5438);
 const jira_client_1 = __importDefault(__nccwpck_require__(6411));
 function registerIssue(summary, description, siembot_jira_user, siembot_jira_pass) {
-    console.log('jira credentials', siembot_jira_user, siembot_jira_pass);
-    const jira = new jira_client_1.default({
-        protocol: 'https',
-        host: 'wealthberry.atlassian.net',
-        username: siembot_jira_user,
-        password: siembot_jira_pass,
-        apiVersion: '2',
-        strictSSL: true,
-    });
-    jira.searchJira('project = "WBP" AND statusCategory in ("To Do", "In Progress") AND summary ~ "' + summary + '" ORDER BY updated DESC')
-        .then((data) => {
-        if (data.issues && data.issues.length > 0) {
-            console.log('Already exists');
-        }
-        else {
-            jira.addNewIssue({
-                fields: {
-                    summary: summary,
-                    issuetype: {
-                        id: "10001"
-                    },
-                    labels: [
-                        "siem"
-                    ],
-                    project: {
-                        "id": "10000"
-                    },
-                    "description": description,
-                }
-            }).then((data) => {
-                console.log(data);
+    return __awaiter(this, void 0, void 0, function* () {
+        return new Promise((resolve, reject) => {
+            const jira = new jira_client_1.default({
+                protocol: 'https',
+                host: 'wealthberry.atlassian.net',
+                username: siembot_jira_user,
+                password: siembot_jira_pass,
+                apiVersion: '2',
+                strictSSL: true,
             });
-        }
+            jira.searchJira('project = "WBP" AND summary ~ "' + summary + '" ORDER BY updated DESC')
+                .then((data) => {
+                if (data.issues && data.issues.length > 0) {
+                    console.log('Already exists');
+                    resolve(false);
+                }
+                else {
+                    jira.addNewIssue({
+                        fields: {
+                            summary: summary,
+                            issuetype: {
+                                id: "10001"
+                            },
+                            labels: [
+                                "siem"
+                            ],
+                            project: {
+                                "id": "10000"
+                            },
+                            "description": description,
+                        }
+                    }).then((data) => {
+                        console.log(data);
+                        resolve(true);
+                    });
+                }
+            });
+        });
     });
 }
 const fetchAlerts = (gitHubPersonalAccessToken, repositoryName, repositoryOwner, count, siembot_jira_user, siembot_jira_pass) => __awaiter(void 0, void 0, void 0, function* () {
@@ -540,8 +545,9 @@ const fetchAlerts = (gitHubPersonalAccessToken, repositoryName, repositoryOwner,
         const alerts = [];
         for (const gitHubAlert of gitHubAlerts) {
             if (gitHubAlert && gitHubAlert.node && gitHubAlert.node.securityAdvisory) {
-                registerIssue("siem-bot-github-issue-" + gitHubAlert.node.securityAdvisory.id, gitHubAlert.node.securityAdvisory.description + '\n\n' + JSON.stringify(gitHubAlert), siembot_jira_user, siembot_jira_pass);
-                alerts.push((0, entities_1.toAlert)(gitHubAlert.node));
+                const res = yield registerIssue("siem-bot-github-issue-" + gitHubAlert.node.securityAdvisory.id, gitHubAlert.node.securityAdvisory.description + '\n\n' + JSON.stringify(gitHubAlert), siembot_jira_user, siembot_jira_pass);
+                if (res === true)
+                    alerts.push((0, entities_1.toAlert)(gitHubAlert.node));
             }
         }
         return alerts;
