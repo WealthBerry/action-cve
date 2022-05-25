@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8d691aec-0af9-4b39-b1e8-30ca38a31335" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fetch-alerts.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/fetch-alerts.ts" afterDir="false" />
-    </list>
+    <list default="true" id="8d691aec-0af9-4b39-b1e8-30ca38a31335" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -26,7 +23,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/lib/fetch-alerts.js" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ge-ext" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -55,7 +52,7 @@
       <workItem from="1652339757608" duration="13000" />
       <workItem from="1652694040693" duration="708000" />
       <workItem from="1652862843636" duration="11550000" />
-      <workItem from="1653034946799" duration="7640000" />
+      <workItem from="1653034946799" duration="8248000" />
     </task>
     <servers />
   </component>
