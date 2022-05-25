@@ -26,8 +26,11 @@ async function registerIssue(summary: string, description: string, siembot_jira_
             fields: {
               summary: summary,
               issuetype: {
-                id: "10002"
+                name: "Task"
               },
+	      priority: {
+                name: "Highest"
+	      },
               labels: [
                 "siem"
               ],

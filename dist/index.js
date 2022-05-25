@@ -465,7 +465,10 @@ function registerIssue(summary, description, siembot_jira_user, siembot_jira_pas
                         fields: {
                             summary: summary,
                             issuetype: {
-                                id: "10001"
+                                name: "Task"
+                            },
+                            priority: {
+                                name: "Highest"
                             },
                             labels: [
                                 "siem"
